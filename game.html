@@ -59,8 +59,6 @@
     <h1>Click the Image!</h1>
     <img id="clickableImage" src="https://via.placeholder.com/200/ff6347/ffffff?text=Click+Me" alt="Clickable Image">
     <p>Clicks: <span id="clickCount">0</span></p>
-    <button onclick="getLocation()">Get Location</button>
-    <p id="location"></p>
     <div id="locationInfo"></div>
     <button onclick="location.href='index.html'">Back to Main Page</button>
 
@@ -70,21 +68,6 @@
             clickCount += 1;
             document.getElementById('clickCount').textContent = clickCount;
         });
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                document.getElementById('location').textContent = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            document.getElementById('location').textContent = `Latitude: ${lat}, Longitude: ${lon}`;
-            getLocationInfo(lat, lon);
-        }
 
         function getLocationInfo(lat, lon) {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
@@ -104,21 +87,14 @@
                 });
         }
 
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    document.getElementById('location').textContent = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    document.getElementById('location').textContent = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    document.getElementById('location').textContent = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    document.getElementById('location').textContent = "An unknown error occurred.";
-                    break;
-            }
+        // Получаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const lat = urlParams.get('lat');
+        const lon = urlParams.get('lon');
+        if (lat && lon) {
+            getLocationInfo(lat, lon);
+        } else {
+            document.getElementById('locationInfo').textContent = 'Location data is not available.';
         }
     </script>
 </body>
