@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game</title>
+    <title>Main Page</title>
     <style>
         body {
             display: flex;
@@ -21,33 +21,23 @@
             font-size: 3rem;
             margin-bottom: 20px;
         }
-        img {
-            width: 200px;
-            height: 200px;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: transform 0.2s ease;
-        }
-        img:active {
-            transform: scale(1.1);
-        }
-        p {
+        button {
+            padding: 15px 30px;
             font-size: 1.5rem;
-            margin-top: 20px;
+            color: #fff;
+            background-color: #ff6347;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e5533d;
         }
     </style>
 </head>
 <body>
-    <h1>Click the Image!</h1>
-    <img id="clickableImage" src="https://via.placeholder.com/200/ff6347/ffffff?text=Click+Me" alt="Clickable Image">
-    <p>Clicks: <span id="clickCount">0</span></p>
-
-    <script>
-        let clickCount = 0;
-        document.getElementById('clickableImage').addEventListener('click', () => {
-            clickCount += 1;
-            document.getElementById('clickCount').textContent = clickCount;
-        });
-    </script>
+    <h1>Welcome to Clicker Game</h1>
+    <button onclick="location.href='game.html'">Start Game</button>
 </body>
 </html>
