@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+        img:active {
+            transform: scale(1.1);
+        }
+        p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ff6347;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #e5533d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Click the Image!</h1>
+    <img id="clickableImage" src="https://via.placeholder.com/200/ff6347/ffffff?text=Click+Me" alt="Clickable Image">
+    <p>Clicks: <span id="clickCount">0</span></p>
+    <button onclick="location.href='index.html'">Back to Main Page</button>
+
+    <script>
+        let clickCount = 0;
+        document.getElementById('clickableImage').addEventListener('click', () => {
+            clickCount += 1;
+            document.getElementById('clickCount').textContent = clickCount;
+        });
+    </script>
+</body>
+</html>
