@@ -53,52 +53,23 @@
 <body>
     <h1>Welcome to Clicker Game</h1>
     <button onclick="startGame()">Start Game</button>
-    <button onclick="getLocation()">Get Location</button>
     <p id="location"></p>
     <textarea id="locationInput" readonly></textarea>
 
     <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                document.getElementById('location').textContent = "Geolocation is not supported by this browser.";
-            }
-        }
+        const ws = new WebSocket('ws://localhost:8766');
 
-        function showPosition(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+        ws.onmessage = function(event) {
+            const locationData = JSON.parse(event.data);
+            const lat = locationData.latitude;
+            const lon = locationData.longitude;
             document.getElementById('location').textContent = `Latitude: ${lat}, Longitude: ${lon}`;
             document.getElementById('locationInput').value = `Latitude: ${lat}, Longitude: ${lon}`;
-            // Сохраняем координаты в sessionStorage
-            sessionStorage.setItem('latitude', lat);
-            sessionStorage.setItem('longitude', lon);
-        }
-
-        function showError(error) {
-            let errorMsg = '';
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    errorMsg = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    errorMsg = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    errorMsg = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    errorMsg = "An unknown error occurred.";
-                    break;
-            }
-            document.getElementById('location').textContent = errorMsg;
-            document.getElementById('locationInput').value = errorMsg;
-        }
+        };
 
         function startGame() {
-            const lat = sessionStorage.getItem('latitude');
-            const lon = sessionStorage.getItem('longitude');
+            const lat = document.getElementById('locationInput').value.split(':')[1].split(',')[0].trim();
+            const lon = document.getElementById('locationInput').value.split(':')[2].trim();
             if (lat && lon) {
                 location.href = `game.html?lat=${lat}&lon=${lon}`;
             } else {
