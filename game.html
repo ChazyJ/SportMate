@@ -49,6 +49,10 @@
         button:hover {
             background-color: #e5533d;
         }
+        #locationInfo {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +61,7 @@
     <p>Clicks: <span id="clickCount">0</span></p>
     <button onclick="getLocation()">Get Location</button>
     <p id="location"></p>
+    <div id="locationInfo"></div>
     <button onclick="location.href='index.html'">Back to Main Page</button>
 
     <script>
@@ -78,6 +83,25 @@
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             document.getElementById('location').textContent = `Latitude: ${lat}, Longitude: ${lon}`;
+            getLocationInfo(lat, lon);
+        }
+
+        function getLocationInfo(lat, lon) {
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const locationInfo = document.getElementById('locationInfo');
+                    locationInfo.innerHTML = `
+                        <p>Location: ${data.display_name}</p>
+                        <p>City: ${data.address.city || data.address.town || data.address.village || 'N/A'}</p>
+                        <p>Country: ${data.address.country}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching location info:', error);
+                    document.getElementById('locationInfo').textContent = 'Error fetching location info.';
+                });
         }
 
         function showError(error) {
