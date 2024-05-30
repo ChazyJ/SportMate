@@ -57,7 +57,7 @@
     <textarea id="locationInput" readonly></textarea>
 
     <script>
-        const ws = new WebSocket('ws://localhost:8766');
+        const ws = new WebSocket('ws://localhost:8765');
 
         ws.onmessage = function(event) {
             const locationData = JSON.parse(event.data);
