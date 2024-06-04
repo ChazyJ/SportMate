@@ -3,79 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        button {
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            color: #fff;
-            background-color: #ff6347;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-bottom: 20px;
-        }
-        button:hover {
-            background-color: #e5533d;
-        }
-        p {
-            font-size: 1.5rem;
-        }
-        #locationInput {
-            width: 80%;
-            height: 100px;
-            font-size: 1rem;
-            margin-top: 20px;
-            padding: 10px;
-            border: 2px solid #ff6347;
-            border-radius: 5px;
-            resize: none;
-        }
-    </style>
+    <title>SportMate</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to Clicker Game</h1>
-    <button onclick="startGame()">Start Game</button>
-    <p id="location"></p>
-    <textarea id="locationInput" readonly></textarea>
+    <header>
+        <h1>SportMate</h1>
+        <p>Find your sport buddy!</p>
+    </header>
+    
+    <main>
+        <section id="profile">
+            <img src="profile.jpg" alt="Profile Picture" id="profile-pic">
+            <h2 id="profile-name">User Name</h2>
+            <p id="profile-bio">This is a short bio about the user.</p>
+            <div id="actions">
+                <button id="dislike-btn">Dislike</button>
+                <button id="like-btn">Like</button>
+            </div>
+        </section>
+        
+        <section id="new-profile-form">
+            <h2>Create a New Profile</h2>
+            <form id="profile-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" required></textarea>
+                
+                <label for="picture">Profile Picture URL:</label>
+                <input type="url" id="picture" name="picture" required>
+                
+                <button type="submit">Create Profile</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 SportMate</p>
+    </footer>
 
-    <script>
-        const ws = new WebSocket('ws://localhost:8765');
-
-        ws.onmessage = function(event) {
-            const locationData = JSON.parse(event.data);
-            const lat = locationData.latitude;
-            const lon = locationData.longitude;
-            document.getElementById('location').textContent = `Latitude: ${lat}, Longitude: ${lon}`;
-            document.getElementById('locationInput').value = `Latitude: ${lat}, Longitude: ${lon}`;
-        };
-
-        function startGame() {
-            const lat = document.getElementById('locationInput').value.split(':')[1].split(',')[0].trim();
-            const lon = document.getElementById('locationInput').value.split(':')[2].trim();
-            if (lat && lon) {
-                location.href = `game.html?lat=${lat}&lon=${lon}`;
-            } else {
-                alert('Please get your location first.');
-            }
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
